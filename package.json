@@ -1,0 +1,13 @@
+{
+  "name": "medieval-rts",
+  "version": "1.0.0",
+  "description": "중세 배경 3D RTS 게임 (Three.js)",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve -l 8080 .",
+    "dev": "npx --yes serve -l 8080 ."
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  }
+}

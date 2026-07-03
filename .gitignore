@@ -1,0 +1,17 @@
+# 의존성
+node_modules/
+
+# 로그
+*.log
+npm-debug.log*
+
+# 캐시
+.cache/
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# 에디터
+.vscode/
+.idea/

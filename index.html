@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medieval RTS — 중세 왕국 전쟁</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- 좌측 상단: 자원 HUD -->
+    <div id="resource-hud" class="hud-panel">
+      <div class="resource"><span class="icon gold">🪙</span><span id="gold-amount">0</span></div>
+      <div class="resource"><span class="icon food">🍖</span><span id="food-amount">0</span></div>
+      <div class="resource"><span class="icon wave">⚔️</span><span id="wave-info">웨이브 1</span></div>
+    </div>
+
+    <!-- 우측 상단: 승패/시간 -->
+    <div id="status-hud" class="hud-panel">
+      <div id="castle-hp"><span>내 성</span><div class="bar"><div id="player-castle-bar" class="fill player"></div></div></div>
+      <div id="castle-hp"><span>적 성</span><div class="bar"><div id="enemy-castle-bar" class="fill enemy"></div></div></div>
+      <div id="next-wave">다음 웨이브: <span id="wave-timer">30</span>s</div>
+    </div>
+
+    <!-- 우측 하단: 건물 선택 시 생산 메뉴 -->
+    <div id="build-menu" class="hud-panel hidden">
+      <div class="menu-title" id="build-menu-title">선택됨</div>
+      <div id="build-buttons"></div>
+    </div>
+
+    <!-- 좌측 하단: 선택된 유닛 정보 -->
+    <div id="selection-info" class="hud-panel hidden">
+      <div id="selection-summary"></div>
+    </div>
+
+    <!-- 드래그 선택 박스 -->
+    <div id="drag-box"></div>
+
+    <!-- 안내 -->
+    <div id="hint" class="hud-panel">좌클릭 드래그: 선택 · 우클릭: 이동/공격/채집 · B: 병영 건설 · 모서리/WASD: 카메라 · 휠: 줌</div>
+
+    <!-- 시작 / 종료 화면 -->
+    <div id="overlay" class="overlay">
+      <div class="overlay-content">
+        <h1>⚔️ 중세 왕국 전쟁</h1>
+        <p>적의 성을 파괴하라. 정기적인 웨이브를 막아내며 병력을 키우세요.</p>
+        <ul>
+          <li>🪶 <b>주민</b> 선택 후 금광 우클릭 → 금 채집</li>
+          <li>🏰 성에서 주민 생산 (🪙30 🍖10)</li>
+          <li>⚒️ 주민 선택 후 <b>B</b> 또는 건설 버튼 → 병영 건설 (🪙120)</li>
+          <li>🗡️ 병영에서 기사/궁수 생산, 적 성 파괴가 목표</li>
+        </ul>
+        <button id="start-btn">전쟁 시작</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./node_modules/three/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
