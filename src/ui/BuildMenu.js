@@ -18,7 +18,7 @@ export class BuildMenu {
       // 건물 → 생산 모드
       this.currentEntity = entity;
       this.mode = 'production';
-      const labelMap = { Castle: '🏰 성', Barracks: '⚒️ 병영' };
+      const labelMap = { Castle: '🏰 성', Barracks: '⚒️ 병영', WatchTower: '🛡️ 감시탑' };
       this.titleEl.textContent = labelMap[entity.constructor.name] || entity.constructor.name;
       this._renderProduction();
     } else if (entity && entity.isWorker && entity.team === 'player') {
@@ -50,8 +50,7 @@ export class BuildMenu {
     opts.forEach((opt, idx) => {
       const btn = this._makeButton(opt, () => {
         if (!this.currentEntity || !this.currentEntity.alive) return;
-        this.currentEntity.queueUnit(opt.unitClass);
-        this._flashButton(btn);
+        if (this.currentEntity.queueUnit(opt.unitClass)) this._flashButton(btn);
       });
       btn._cost = opt.cost;
       this.buttonsEl.appendChild(btn);
@@ -80,9 +79,6 @@ export class BuildMenu {
   // ===== 건설 모드 (주민 선택 시) =====
   _renderBuildOptions() {
     this.buttonsEl.innerHTML = '';
-    const villageHasBarracks = this.game.buildings.some(
-      (b) => b.team === 'player' && b.constructor.name === 'Barracks'
-    );
 
     BUILD_OPTIONS.forEach((opt) => {
       const btn = this._makeButton(opt, () => {
@@ -104,6 +100,7 @@ export class BuildMenu {
   _makeButton(opt, onClick) {
     const btn = document.createElement('button');
     btn.className = 'build-btn';
+    btn.type = 'button';
     const costStr = `🪙${opt.cost.gold || 0}${opt.cost.food ? ' 🍖' + opt.cost.food : ''}`;
     const desc = opt.desc || opt.name;
     btn.innerHTML = `${opt.icon || '🔨'} ${opt.name} <span class="cost">${costStr}</span>`;
@@ -145,14 +142,15 @@ export class BuildMenu {
       if (e.currentProduction) items.push(e.currentProduction);
       items.push(...e.productionQueue);
       queueRow.innerHTML = '';
-      const labelMap = { Knight: '🗡️', Archer: '🏹', Villager: '🧑‍🌾' };
+      const labelMap = { Knight: '🗡️', Archer: '🏹', Cavalry: '🐎', Healer: '✨', Villager: '🧑‍🌾' };
       for (let i = 0; i < Math.max(items.length, 1); i++) {
         const slot = document.createElement('div');
         slot.style.cssText =
           `width:34px;height:34px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;` +
           `border:1px solid ${i === 0 && e.currentProduction ? '#ffd54a' : '#4a3520'};` +
           `background:${i === 0 && e.currentProduction ? 'rgba(255,213,74,0.15)' : 'rgba(20,14,8,0.5)'};`;
-        const cls = items[i];
+        const item = items[i];
+        const cls = item ? item.UnitClass || item : null;
         slot.textContent = cls ? (labelMap[cls.name] || '⚒️') : (i === 0 ? '—' : '');
         queueRow.appendChild(slot);
       }

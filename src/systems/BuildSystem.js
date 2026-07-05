@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Barracks, Farm } from '../entities/Building.js';
+import { WatchTower } from '../entities/WatchTower.js';
 import { dist2D } from '../utils/helpers.js';
 
 // 건설 시스템 — 건물 배치(placement) 모드 + 주민 건설 동작
@@ -22,6 +23,15 @@ export const BUILD_OPTIONS = [
     buildTime: 6,
     icon: '🌾',
     desc: '식량(Food) 생산 +3/초',
+  },
+  {
+    key: 'watchTower',
+    name: '감시탑 건설',
+    BuildingClass: WatchTower,
+    cost: { gold: 110, food: 25 },
+    buildTime: 7,
+    icon: '🛡️',
+    desc: '주변 적 자동 공격',
   },
 ];
 

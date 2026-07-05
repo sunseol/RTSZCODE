@@ -12,6 +12,9 @@ export class HUD {
     this.enemyCastleBar = document.getElementById('enemy-castle-bar');
     this.selInfo = document.getElementById('selection-info');
     this.selSummary = document.getElementById('selection-summary');
+    this.minimapCanvas = document.getElementById('minimap-canvas');
+    this.minimapCtx = this.minimapCanvas ? this.minimapCanvas.getContext('2d') : null;
+    this.worldHalfSize = 80;
 
     this.markers = [];
   }
@@ -32,6 +35,7 @@ export class HUD {
       const r = this.game.enemyCastle.hp / this.game.enemyCastle.maxHp;
       this.enemyCastleBar.style.width = (r * 100) + '%';
     }
+    this.updateMinimap();
   }
 
   updateSelection() {
@@ -51,9 +55,13 @@ export class HUD {
     const labelMap = {
       Knight: '🗡️ 기사',
       Archer: '🏹 궁수',
+      Cavalry: '🐎 기병',
+      Healer: '✨ 치료사',
       Villager: '🧑‍🌾 주민',
       Castle: '🏰 성',
       Barracks: '⚒️ 병영',
+      Farm: '🌾 농장',
+      WatchTower: '🛡️ 감시탑',
     };
     let html = '';
     for (const [name, count] of Object.entries(counts)) {
@@ -70,7 +78,7 @@ export class HUD {
   // 우클릭 명령 위치에 잠깐 나타나는 마커 (명령 종류별 색상)
   // type: 'move' (초록), 'attack' (빨강), 'gather' (노랑)
   flashCommandMarker(worldPoint, type = 'move') {
-    const colors = { move: 0x66ff66, attack: 0xff4444, gather: 0xffd54a };
+    const colors = { move: 0x66ff66, attack: 0xff4444, gather: 0xffd54a, heal: 0x9dff8a };
     const color = colors[type] || colors.move;
     const geo = new THREE.RingGeometry(0.6, 1.0, 24);
     geo.rotateX(-Math.PI / 2);
@@ -96,5 +104,71 @@ export class HUD {
         this.markers.splice(i, 1);
       }
     }
+  }
+
+  updateMinimap() {
+    if (!this.minimapCtx) return;
+    const ctx = this.minimapCtx;
+    const w = this.minimapCanvas.width;
+    const h = this.minimapCanvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#1f3421';
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = 'rgba(255, 220, 160, 0.18)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 4; i++) {
+      const p = (w / 4) * i;
+      ctx.beginPath();
+      ctx.moveTo(p, 0);
+      ctx.lineTo(p, h);
+      ctx.moveTo(0, p);
+      ctx.lineTo(w, p);
+      ctx.stroke();
+    }
+
+    for (const mine of this.game.goldMines) {
+      if (mine.alive) this._drawMinimapPoint(mine, '#ffd54a', 2.4);
+    }
+    for (const building of this.game.buildings) {
+      if (!building.alive) continue;
+      const color = building.team === 'player' ? '#5fb8ff' : '#ff6b5b';
+      this._drawMinimapPoint(building, color, building.isBuilding ? 3.2 : 2.4);
+    }
+    for (const unit of this.game.units) {
+      if (!unit.alive) continue;
+      const color = unit.team === 'player' ? '#8cff78' : '#ff4a4a';
+      this._drawMinimapPoint(unit, color, unit.isSupport ? 2.4 : 2);
+    }
+
+    const target = this.game.rtsCamera.target;
+    const p = this._worldToMinimap(target.x, target.z);
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(p.x - 4, p.y - 4, 8, 8);
+  }
+
+  _drawMinimapPoint(entity, color, size) {
+    const p = this._worldToMinimap(entity.x, entity.z);
+    const ctx = this.minimapCtx;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+    ctx.fill();
+    if (entity.selected) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  _worldToMinimap(x, z) {
+    const w = this.minimapCanvas.width;
+    const h = this.minimapCanvas.height;
+    const nx = (x + this.worldHalfSize) / (this.worldHalfSize * 2);
+    const nz = (z + this.worldHalfSize) / (this.worldHalfSize * 2);
+    return {
+      x: Math.max(0, Math.min(w, nx * w)),
+      y: Math.max(0, Math.min(h, nz * h)),
+    };
   }
 }

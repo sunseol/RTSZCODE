@@ -4,6 +4,8 @@ import { createLighting } from './world/Lighting.js';
 import { RTSCamera } from './camera/RTSCamera.js';
 import { Knight } from './entities/Knight.js';
 import { Archer } from './entities/Archer.js';
+import { Cavalry } from './entities/Cavalry.js';
+import { Healer } from './entities/Healer.js';
 import { Villager } from './entities/Villager.js';
 import { GoldMine, Castle, Barracks } from './entities/Building.js';
 import { ResourceSystem } from './systems/ResourceSystem.js';
@@ -23,7 +25,7 @@ export class Game {
     this.gameOver = false;
 
     // 유닛 클래스 레퍼런스 (Building 등에서 참조용)
-    this.unitClasses = { Knight, Archer, Villager };
+    this.unitClasses = { Knight, Archer, Cavalry, Healer, Villager };
 
     // ===== Three.js 기본 설정 =====
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -172,6 +174,7 @@ export class Game {
     this.gameOver = false;
     this.lastTime = performance.now();
     this._loop();
+    if (window.location.search.includes('debug')) window.__game = this;
   }
 
   _loop = () => {
@@ -277,7 +280,7 @@ export class Game {
         <p>${won
           ? '적의 성을 파괴하고 영광을 차지했습니다.'
           : '적의 웨이브를 막아내지 못했습니다.'}</p>
-        <button class="end-btn" id="restart-btn">다시 도전</button>
+        <button type="button" class="end-btn" id="restart-btn">다시 도전</button>
       </div>
     `;
     document.getElementById('restart-btn').addEventListener('click', () => location.reload());

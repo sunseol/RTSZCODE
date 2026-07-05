@@ -40,8 +40,12 @@ export class EnemyAI {
     const castle = this.game.enemyCastle;
 
     for (let i = 0; i < count; i++) {
-      const isKnight = Math.random() > 0.45;
-      const UnitClass = isKnight ? this.game.unitClasses.Knight : this.game.unitClasses.Archer;
+      const roll = Math.random();
+      const UnitClass = roll > 0.72
+        ? this.game.unitClasses.Cavalry
+        : roll > 0.45
+          ? this.game.unitClasses.Knight
+          : this.game.unitClasses.Archer;
       // 적 병영 또는 성 근처에 스폰
       const source = enemyBarracks.length > 0
         ? enemyBarracks[i % enemyBarracks.length]

@@ -74,10 +74,10 @@ export class Building extends Entity {
 
   // 생산 큐에 추가
   queueUnit(UnitClass) {
-    const cost = UnitClass.prototype.cost ? UnitClass.prototype.cost : new UnitClass(this.game, 0, 0).cost;
-    if (!this.game.resources.canAfford(this.team, cost)) return false;
-    this.game.resources.spend(this.team, cost);
-    this.productionQueue.push(UnitClass);
+    const info = this._unitInfo(UnitClass);
+    if (!this.game.resources.canAfford(this.team, info.cost)) return false;
+    this.game.resources.spend(this.team, info.cost);
+    this.productionQueue.push(info);
     return true;
   }
 
@@ -106,13 +106,12 @@ export class Building extends Entity {
     // 생산 처리
     if (this.productionQueue.length > 0 && !this.currentProduction) {
       this.currentProduction = this.productionQueue.shift();
-      const dummy = this._dummyCost(this.currentProduction);
-      this.productionTimer = dummy.buildTime || 4;
+      this.productionTimer = this.currentProduction.buildTime || 4;
     }
     if (this.currentProduction) {
       this.productionTimer -= dt;
       if (this.productionTimer <= 0) {
-        this._spawnUnit(this.currentProduction);
+        this._spawnUnit(this.currentProduction.UnitClass);
         this.currentProduction = null;
       }
     }
@@ -149,9 +148,11 @@ export class Building extends Entity {
     }
   }
 
-  _dummyCost(UnitClass) {
-    // 인스턴스 생성 없이 비용/시간 조회용
-    return { cost: UnitClass.prototype.cost, buildTime: UnitClass.prototype.buildTime };
+  _unitInfo(UnitClass) {
+    const tmp = new UnitClass(this.game, 0, 0, this.team);
+    const info = { UnitClass, cost: tmp.cost, buildTime: tmp.buildTime };
+    tmp.destroy();
+    return info;
   }
 
   _spawnUnit(UnitClass) {
@@ -174,7 +175,7 @@ export class Building extends Entity {
   // 진척도 (0~1)
   getProductionProgress() {
     if (!this.currentProduction) return 0;
-    const total = this._dummyCost(this.currentProduction).buildTime || 4;
+    const total = this.currentProduction.buildTime || 4;
     return 1 - this.productionTimer / total;
   }
 }
@@ -248,7 +249,8 @@ export class Castle extends Building {
     // 동적 import 대신 클래스 레퍼런스 반환
     const Villager = this._villagerClass();
     return [
-      { name: '주민 생산', cost: { gold: 30, food: 10 }, time: 3, unitClass: Villager, icon: '🧑‍🌾' }
+      { name: '주민 생산', cost: { gold: 30, food: 10 }, time: 3, unitClass: Villager, icon: '🧑‍🌾' },
+      { name: '치료사 양성', cost: { gold: 70, food: 45 }, time: 5, unitClass: this.game.unitClasses.Healer, icon: '✨' }
     ];
   }
 
@@ -323,7 +325,8 @@ export class Barracks extends Building {
   getProductionOptions() {
     return [
       { name: '기사 훈련', cost: { gold: 60, food: 40 }, time: 5, unitClass: this.game.unitClasses.Knight, icon: '🗡️' },
-      { name: '궁수 훈련', cost: { gold: 50, food: 25 }, time: 4, unitClass: this.game.unitClasses.Archer, icon: '🏹' }
+      { name: '궁수 훈련', cost: { gold: 50, food: 25 }, time: 4, unitClass: this.game.unitClasses.Archer, icon: '🏹' },
+      { name: '기병 훈련', cost: { gold: 85, food: 55 }, time: 6, unitClass: this.game.unitClasses.Cavalry, icon: '🐎' }
     ];
   }
 }

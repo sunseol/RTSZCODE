@@ -36,11 +36,16 @@
       <div id="selection-summary"></div>
     </div>
 
+    <div id="minimap" class="hud-panel">
+      <div class="minimap-title">미니맵</div>
+      <canvas id="minimap-canvas" width="168" height="168"></canvas>
+    </div>
+
     <!-- 드래그 선택 박스 -->
     <div id="drag-box"></div>
 
     <!-- 안내 -->
-    <div id="hint" class="hud-panel">좌클릭 드래그: 선택 · 우클릭: 이동/공격/채집 · B: 병영 건설 · 모서리/WASD: 카메라 · 휠: 줌</div>
+    <div id="hint" class="hud-panel">드래그: 선택 · 더블클릭: 같은 유닛 선택 · 우클릭: 이동/공격/치료/채집 · B/F/T: 건설 · WASD/모서리: 카메라 · 휠: 줌</div>
 
     <!-- 시작 / 종료 화면 -->
     <div id="overlay" class="overlay">
@@ -50,10 +55,10 @@
         <ul>
           <li>🪶 <b>주민</b> 선택 후 금광 우클릭 → 금 채집</li>
           <li>🏰 성에서 주민 생산 (🪙30 🍖10)</li>
-          <li>⚒️ 주민 선택 후 <b>B</b> 또는 건설 버튼 → 병영 건설 (🪙120)</li>
-          <li>🗡️ 병영에서 기사/궁수 생산, 적 성 파괴가 목표</li>
+          <li>⚒️ 주민 선택 후 <b>B/F/T</b> 또는 건설 버튼 → 병영/농장/감시탑 건설</li>
+          <li>🗡️ 병영에서 기사/궁수/기병, 성에서 주민/치료사 생산</li>
         </ul>
-        <button id="start-btn">전쟁 시작</button>
+        <button type="button" id="start-btn">전쟁 시작</button>
       </div>
     </div>
   </div>

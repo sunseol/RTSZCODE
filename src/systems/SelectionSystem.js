@@ -49,15 +49,44 @@ export class SelectionSystem {
   }
 
   selectSingle(entity) {
+    const next = entity && entity.team === 'player' ? [entity] : [];
+    this._applySelection(next);
+  }
+
+  selectVisibleUnitsOfType(entity) {
+    if (!entity || entity.team !== 'player' || !this.game.units.includes(entity)) {
+      this.selectSingle(entity);
+      return;
+    }
+    const UnitClass = entity.constructor;
+    const visible = this.game.units.filter((u) =>
+      u.alive && u.team === 'player' && u.constructor === UnitClass && this._isVisibleOnScreen(u)
+    );
+    this._applySelection(visible.length > 0 ? visible : [entity]);
+  }
+
+  _applySelection(entities) {
     this.clear();
-    if (entity && entity.team === 'player') {
-      entity.setSelected(true);
-      this.selected = [entity];
-    }
+    for (const entity of entities) entity.setSelected(true);
+    this.selected = entities;
     this.game.ui.hud.updateSelection();
-    if (this.selected.length > 0) {
+    this._updateBuildMenuForSelection();
+  }
+
+  _updateBuildMenuForSelection() {
+    if (this.selected.length === 1) {
       this.game.ui.buildMenu.show(this.selected[0]);
+    } else if (this.selected.length > 1 && this.selected.every((u) => u.isWorker)) {
+      this.game.ui.buildMenu.show(this.selected[0]);
+    } else {
+      this.game.ui.buildMenu.hide();
     }
+  }
+
+  _isVisibleOnScreen(entity) {
+    const p = entity.group.position.clone();
+    p.project(this.game.camera);
+    return p.z >= -1 && p.z <= 1 && p.x >= -1 && p.x <= 1 && p.y >= -1 && p.y <= 1;
   }
 
   // 드래그 시작
@@ -102,23 +131,11 @@ export class SelectionSystem {
         selected.push(u);
       }
     }
-    // 군사 유닛 우선, 없으면 주민
-    let final = selected.filter((u) => u.isMilitary);
+    let final = selected.filter((u) => u.isMilitary || u.isSupport);
     if (final.length === 0) final = selected.filter((u) => u.isWorker);
     if (final.length === 0) final = selected;
 
-    for (const u of final) u.setSelected(true);
-    this.selected = final;
-    this.game.ui.hud.updateSelection();
-    // 단일 선택이거나, 선택된 것이 모두 같은 타입(주민 또는 건물)이면 메뉴 표시
-    if (final.length === 1) {
-      this.game.ui.buildMenu.show(final[0]);
-    } else if (final.length > 1 && final.every((u) => u.isWorker)) {
-      // 주민 다중 선택 — 대표 주민으로 건설 메뉴 표시
-      this.game.ui.buildMenu.show(final[0]);
-    } else {
-      this.game.ui.buildMenu.hide();
-    }
+    this._applySelection(final);
     return 'drag';
   }
 
@@ -138,20 +155,31 @@ export class SelectionSystem {
   issueRightClick(worldPoint, targetEntity) {
     const milSelected = this.selected.filter((u) => u.isMilitary && u.alive);
     const workers = this.selected.filter((u) => u.isWorker && u.alive);
+    const support = this.selected.filter((u) => u.isSupport && u.alive);
 
-    if (targetEntity && targetEntity.team === 'enemy') {
+    if (targetEntity && targetEntity.team === 'enemy' && (milSelected.length > 0 || workers.length > 0)) {
       // 공격 명령
       for (const u of [...milSelected, ...workers]) {
         if (u.commandAttack) u.commandAttack(targetEntity);
       }
       return 'attack';
+    } else if (
+      targetEntity &&
+      targetEntity.team === 'player' &&
+      targetEntity.hp < targetEntity.maxHp &&
+      support.length > 0
+    ) {
+      for (const u of support) {
+        if (u.commandHeal) u.commandHeal(targetEntity);
+      }
+      return 'heal';
     } else if (targetEntity && targetEntity.isMine && workers.length > 0) {
       // 주민 채집 명령
       for (const w of workers) w.commandGather(targetEntity);
       return 'gather';
     } else {
       // 이동 명령 — 유닛들을 약간 분산시켜 배치
-      const units = [...milSelected, ...workers];
+      const units = [...milSelected, ...workers, ...support];
       const n = units.length;
       units.forEach((u, i) => {
         const angle = (i / Math.max(n, 1)) * Math.PI * 2;

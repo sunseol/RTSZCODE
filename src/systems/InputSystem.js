@@ -66,7 +66,8 @@ export class InputSystem {
         const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
         const ent = this.selection.pickEntity(ndcX, ndcY);
         if (ent) {
-          this.selection.selectSingle(ent);
+          if (e.detail >= 2) this.selection.selectVisibleUnitsOfType(ent);
+          else this.selection.selectSingle(ent);
         } else {
           this.selection.clear();
         }
@@ -88,8 +89,7 @@ export class InputSystem {
           if (u.commandStop) u.commandStop();
         }
       }
-      // 숫자키 1-4: 생산 단축키 (선택된 건물 기준)
-      if (k >= '1' && k <= '4') {
+      if (k >= '1' && k <= '9') {
         const idx = parseInt(k) - 1;
         const sel = this.selection.selected[0];
         if (sel && sel.getProductionOptions) {
@@ -101,6 +101,14 @@ export class InputSystem {
       if (k === 'b') {
         const hasWorker = this.selection.selected.some((u) => u.isWorker);
         if (hasWorker) this.game.build.enterPlacement('barracks');
+      }
+      if (k === 'f') {
+        const hasWorker = this.selection.selected.some((u) => u.isWorker);
+        if (hasWorker) this.game.build.enterPlacement('farm');
+      }
+      if (k === 't') {
+        const hasWorker = this.selection.selected.some((u) => u.isWorker);
+        if (hasWorker) this.game.build.enterPlacement('watchTower');
       }
     });
   }

@@ -40,6 +40,11 @@ export class Entity {
     }
   }
 
+  heal(amount) {
+    if (!this.alive || this.hp >= this.maxHp) return;
+    this.hp = Math.min(this.maxHp, this.hp + amount);
+  }
+
   _flash() {
     // 피격 시 살짝 흔들림/점프 효과
     this.group.position.y = this.y + 0.4;
