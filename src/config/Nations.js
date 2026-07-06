@@ -7,6 +7,7 @@ export const NATIONS = [
   { id: 'okjeo', name: '옥저', epithet: '동해의 곡창', accent: '#54a8c8' },
   { id: 'dongye', name: '동예', epithet: '숲의 제천', accent: '#5ea05c' },
   { id: 'samhan', name: '삼한', epithet: '세 들의 연맹', accent: '#d8a63a' },
+  { id: 'tamna', name: '탐라', epithet: '바람의 섬왕국', accent: '#2f9d8f' },
   { id: 'goryeo', name: '고려', epithet: '청자의 왕조', accent: '#4f8ec8' },
   { id: 'joseon', name: '조선', epithet: '궁궐과 활', accent: '#c94545' },
   { id: 'balhae', name: '발해', epithet: '해동성국', accent: '#3b9c8f' },

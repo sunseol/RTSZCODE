@@ -9,7 +9,7 @@ export const metadata = {
     template: '%s | 역전(歷戰)',
   },
   description:
-    '고조선부터 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임. 브라우저에서 바로, 역사를 살워보세요. 지금 얼리 액세스로 개발 중.',
+    '고조선부터 탐라와 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임. 브라우저에서 바로, 역사를 살아보세요. 지금 얼리 액세스로 개발 중.',
   keywords: [
     '한국 역사 게임',
     '역사 게임',
@@ -18,6 +18,7 @@ export const metadata = {
     '백제',
     '신라',
     '고조선',
+    '탐라',
     '발해',
     'RTS',
     '실시간 전략 게임',
@@ -37,13 +38,17 @@ export const metadata = {
     siteName: '역전(歷戰)',
     title: '역전(歷戰) — 한국 역사를 직접 싸우며 배우는 3D RTS',
     description:
-      '고조선부터 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임. 브라우저에서 바로 플레이하세요.',
+      '고조선부터 탐라와 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임. 브라우저에서 바로 플레이하세요.',
   },
   twitter: {
     card: 'summary_large_image',
     title: '역전(歷戰) — 한국 역사를 직접 싸우며 배우는 3D RTS',
     description:
-      '고조선부터 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임.',
+      '고조선부터 탐라와 발해까지, 한국 고대사를 직접 전장에서 체험하는 실시간 전략 게임.',
+  },
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    shortcut: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
   },
   robots: {
     index: true,

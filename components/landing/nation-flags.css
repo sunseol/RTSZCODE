@@ -119,6 +119,27 @@
   background: #f8edd1;
 }
 
+.landing-flag--tamna {
+  background: linear-gradient(180deg, #2f9d8f 0 58%, #1d2a28 58% 100%);
+}
+.landing-flag--tamna::before {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f5ead2;
+  left: 24px;
+  top: 9px;
+  box-shadow: 0 0 0 4px rgba(245, 234, 210, 0.18);
+}
+.landing-flag--tamna::after {
+  width: 42px;
+  height: 18px;
+  background: #141917;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  left: 15px;
+  bottom: 0;
+}
+
 .landing-flag--goryeo {
   background: linear-gradient(135deg, #1f4f73 0 48%, #e8d199 48% 54%, #2d8b87 54% 100%);
 }
@@ -171,5 +192,7 @@
   .landing-flag--gojoseon::before { width: 16px; height: 16px; left: 11px; top: 10px; }
   .landing-flag--goguryeo::before { width: 20px; height: 20px; left: 16px; top: 8px; }
   .landing-flag--silla::before { width: 18px; height: 18px; left: 19px; top: 9px; }
+  .landing-flag--tamna::before { width: 18px; height: 18px; left: 19px; top: 7px; }
+  .landing-flag--tamna::after { width: 32px; height: 14px; left: 12px; }
   .landing-flag--joseon::before { width: 18px; height: 18px; left: 19px; top: 9px; }
 }

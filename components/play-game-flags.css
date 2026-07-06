@@ -136,6 +136,29 @@
   background: #f8edd1;
 }
 
+.nation-flag--tamna {
+  background: linear-gradient(180deg, #2f9d8f 0 58%, #1d2a28 58% 100%);
+}
+
+.nation-flag--tamna::before {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f5ead2;
+  left: 17px;
+  top: 6px;
+  box-shadow: 0 0 0 3px rgba(245, 234, 210, 0.18);
+}
+
+.nation-flag--tamna::after {
+  width: 30px;
+  height: 13px;
+  background: #141917;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  left: 11px;
+  bottom: 0;
+}
+
 .nation-flag--goryeo {
   background: linear-gradient(135deg, #1f4f73 0 48%, #e8d199 48% 54%, #2d8b87 54% 100%);
 }

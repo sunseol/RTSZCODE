@@ -10,7 +10,7 @@ export default function Nations() {
           <span className="eyebrow">NATIONS · 국가</span>
           <h2>당신의 왕국을 고르세요.</h2>
           <p>
-            단군조선의 고조선부터 해동성국 발해까지. 한반도 위를 흐른 열한 개
+            단군조선의 고조선부터 제주의 탐라까지. 한반도와 바다를 흐른 열두 개
             국가의 색깔을, 전장에서 직접 들고 나가십시오.
           </p>
         </div>

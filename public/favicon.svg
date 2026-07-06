@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="역전 favicon">
+  <defs>
+    <linearGradient id="field" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a2817" />
+      <stop offset="0.55" stop-color="#1b1209" />
+      <stop offset="1" stop-color="#050403" />
+    </linearGradient>
+    <linearGradient id="gold" x1="12" y1="10" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe08a" />
+      <stop offset="0.5" stop-color="#c9962f" />
+      <stop offset="1" stop-color="#7a4f1d" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#field)" />
+  <path d="M14 13h36v28c0 5-2.5 9.5-7.5 13.5L32 59l-10.5-4.5C16.5 50.5 14 46 14 41V13Z" fill="#14100a" stroke="url(#gold)" stroke-width="3" />
+  <path d="M22 22h20v6H22v-6Zm3 7h14v18h-5v-9h-4v9h-5V29Z" fill="#f0e6d2" />
+  <path d="M19 45h26" stroke="#c9962f" stroke-width="4" stroke-linecap="round" />
+</svg>
