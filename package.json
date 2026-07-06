@@ -1,13 +1,18 @@
 {
   "name": "medieval-rts",
   "version": "1.0.0",
-  "description": "중세 배경 3D RTS 게임 (Three.js)",
+  "description": "한국 역사 기반 3D RTS 게임 (Three.js) — 랜딩은 Next.js SSR, 게임은 Next.js CSR",
   "type": "module",
   "scripts": {
-    "start": "npx --yes serve -l 8080 .",
-    "dev": "npx --yes serve -l 8080 ."
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "three": "^0.160.0"
   }
 }

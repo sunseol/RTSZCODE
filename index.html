@@ -13,6 +13,7 @@
 
     <!-- 좌측 상단: 자원 HUD -->
     <div id="resource-hud" class="hud-panel">
+      <div id="nation-badge" class="nation-badge"></div>
       <div class="resource"><span class="icon gold">🪙</span><span id="gold-amount">0</span></div>
       <div class="resource"><span class="icon food">🍖</span><span id="food-amount">0</span></div>
       <div class="resource"><span class="icon wave">⚔️</span><span id="wave-info">웨이브 1</span></div>
@@ -52,13 +53,23 @@
       <div class="overlay-content">
         <h1>⚔️ 중세 왕국 전쟁</h1>
         <p>적의 성을 파괴하라. 정기적인 웨이브를 막아내며 병력을 키우세요.</p>
+        <section class="settings-panel" aria-labelledby="settings-title">
+          <div class="settings-heading">
+            <div>
+              <h2 id="settings-title">시작 설정</h2>
+              <p id="selected-nation-copy">국가를 선택하세요</p>
+            </div>
+            <div id="selected-nation-preview" class="selected-nation-preview"></div>
+          </div>
+          <div id="nation-options" class="nation-options" role="group" aria-label="국가 선택"></div>
+        </section>
+        <button type="button" id="start-btn">전쟁 시작</button>
         <ul>
           <li>🪶 <b>주민</b> 선택 후 금광 우클릭 → 금 채집</li>
           <li>🏰 성에서 주민 생산 (🪙30 🍖10)</li>
           <li>⚒️ 주민 선택 후 <b>B/F/T</b> 또는 건설 버튼 → 병영/농장/감시탑 건설</li>
           <li>🗡️ 병영에서 기사/궁수/기병, 성에서 주민/치료사 생산</li>
         </ul>
-        <button type="button" id="start-btn">전쟁 시작</button>
       </div>
     </div>
   </div>
@@ -70,6 +81,10 @@
     }
   }
   </script>
-  <script type="module" src="./src/main.js"></script>
+  <script type="module">
+    import { bootGame } from './src/main.js';
+
+    bootGame();
+  </script>
 </body>
 </html>

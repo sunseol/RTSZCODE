@@ -1,0 +1,95 @@
+@media (max-width: 900px) {
+  #hint {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  #resource-hud,
+  #status-hud {
+    font-size: 13px;
+  }
+
+  #resource-hud {
+    max-width: calc(100vw - 28px);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #status-hud {
+    top: 96px;
+    min-width: 190px;
+  }
+
+  #minimap {
+    width: 160px;
+  }
+
+  #minimap-canvas {
+    width: 132px;
+    height: 132px;
+  }
+
+  #selection-info {
+    bottom: 182px;
+    min-width: 160px;
+  }
+
+  .overlay-content {
+    max-height: calc(100dvh - 20px);
+    padding: 14px 16px 22px;
+  }
+
+  .overlay-content h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  .overlay-content p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .overlay-content ul {
+    margin: 10px auto 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .settings-panel {
+    margin: 10px auto 8px;
+    padding: 10px;
+  }
+
+  .settings-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nation-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .nation-option {
+    min-height: 64px;
+    padding: 6px 4px;
+  }
+
+  .nation-epithet {
+    display: none;
+  }
+
+  .end-result-card {
+    padding: 14px;
+  }
+
+  .end-result-state {
+    font-size: 44px;
+  }
+
+  #start-btn {
+    padding: 10px 30px;
+    font-size: 16px;
+  }
+}

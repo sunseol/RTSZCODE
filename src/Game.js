@@ -16,13 +16,15 @@ import { InputSystem } from './systems/InputSystem.js';
 import { BuildSystem } from './systems/BuildSystem.js';
 import { HUD } from './ui/HUD.js';
 import { BuildMenu } from './ui/BuildMenu.js';
+import { DEFAULT_NATION } from './config/Nations.js';
 
 // 게임 메인 클래스 — 모든 시스템 통합 + 업데이트 루프
 export class Game {
-  constructor(canvas) {
+  constructor(canvas, options = {}) {
     this.canvas = canvas;
     this.running = false;
     this.gameOver = false;
+    this.playerNation = options.playerNation || DEFAULT_NATION;
 
     // 유닛 클래스 레퍼런스 (Building 등에서 참조용)
     this.unitClasses = { Knight, Archer, Cavalry, Healer, Villager };
@@ -272,14 +274,20 @@ export class Game {
     this.gameOver = true;
     this.combat.clearAll();
     const overlay = document.getElementById('overlay');
+    const result = won ? '승리' : '패배';
+    const nationName = this.playerNation?.name || '왕국';
+    overlay.style.display = 'flex';
     overlay.classList.remove('fade');
     overlay.innerHTML = `
       <div class="overlay-content ${won ? 'win' : 'lose'}">
-        <div class="end-result">${won ? '🏆 승리!' : '💀 패배...'}</div>
+        <div class="end-result-card" role="status" aria-live="polite">
+          <span class="end-result-label">전투 결과</span>
+          <strong class="end-result-state">${result}</strong>
+        </div>
         <h1>${won ? '왕국을 지켜냈습니다' : '성이 함락되었습니다'}</h1>
         <p>${won
-          ? '적의 성을 파괴하고 영광을 차지했습니다.'
-          : '적의 웨이브를 막아내지 못했습니다.'}</p>
+          ? `${nationName}의 깃발이 전장에 남았습니다. 적의 성을 파괴하고 영광을 차지했습니다.`
+          : `${nationName}의 성이 무너졌습니다. 적의 웨이브를 막아내지 못했습니다.`}</p>
         <button type="button" class="end-btn" id="restart-btn">다시 도전</button>
       </div>
     `;

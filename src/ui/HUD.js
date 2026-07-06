@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { nationFlagHtml } from '../config/Nations.js';
 
 // HUD — 자원 표시, 성 체력, 선택 정보, 명령 마커
 export class HUD {
@@ -7,6 +8,7 @@ export class HUD {
     this.goldEl = document.getElementById('gold-amount');
     this.foodEl = document.getElementById('food-amount');
     this.waveInfoEl = document.getElementById('wave-info');
+    this.nationBadgeEl = document.getElementById('nation-badge');
     this.waveTimerEl = document.getElementById('wave-timer');
     this.playerCastleBar = document.getElementById('player-castle-bar');
     this.enemyCastleBar = document.getElementById('enemy-castle-bar');
@@ -17,6 +19,13 @@ export class HUD {
     this.worldHalfSize = 80;
 
     this.markers = [];
+    this.updateNationBadge();
+  }
+
+  updateNationBadge() {
+    if (!this.nationBadgeEl || !this.game.playerNation) return;
+    const nation = this.game.playerNation;
+    this.nationBadgeEl.innerHTML = `${nationFlagHtml(nation, 'nation-flag--tiny')}<span>${nation.name}</span>`;
   }
 
   update() {

@@ -1,0 +1,165 @@
+/* ===== 역전(歷戰) 글로벌 스타일 — 흑백 시크 + 단청 포인트 ===== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 흑백 베이스 */
+  --ink: #0b0b0c;          /* 숯검정 배경 */
+  --ink-2: #131315;        /* 카드/섹션 표면 */
+  --ink-3: #1c1c1f;        /* 고정 표면 */
+  --line: #2a2a2e;         /* 미묘한 경계선 */
+  --line-2: #3a3a40;       /* 강조 경계선 */
+
+  --paper: #f5f5f2;        /* 한지 톤 순백 */
+  --paper-muted: #c8c8c2;  /* 본문 회톤 */
+  --paper-dim: #8a8a85;    /* 보조 회톤 */
+
+  /* 단청 오방색 — 절제된 포인트로만 사용 */
+  --dancheong-red: #c8102e;    /* 주홍 */
+  --dancheong-blue: #1b6e7a;   /* 청록 */
+  --dancheong-gold: #c9a24b;   /* 황금 */
+  --dancheong-black: #1a1a1a;  /* 흑 */
+  --dancheong-white: #f5f5f2;  /* 백 */
+
+  /* 폰트 (구글 웹폰트) */
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Noto Sans KR', system-ui, sans-serif;
+
+  --maxw: 1200px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--dancheong-red);
+  color: var(--paper);
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dancheong-gold);
+}
+
+/* ===== 랜딩 공통 레이아웃 유틸 ===== */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  position: relative;
+  padding: clamp(72px, 12vw, 140px) 0;
+}
+
+.section--tight {
+  padding: clamp(56px, 8vw, 96px) 0;
+}
+
+/* 섹션 구분선: 단청 드물게 */
+.section + .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(120px, 40vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--dancheong-gold),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--dancheong-gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--dancheong-gold);
+  opacity: 0.7;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.lead {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--paper-muted);
+  line-height: 1.8;
+  max-width: 60ch;
+}
+
+/* 접근성: 모션 감소 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

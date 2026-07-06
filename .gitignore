@@ -1,5 +1,9 @@
 # 의존성
 node_modules/
+.next/
+.omo/
+.omx/
+qa/
 
 # 로그
 *.log

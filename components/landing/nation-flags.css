@@ -1,0 +1,175 @@
+/* ===== 랜딩용 국기 CSS — 게임(style.css)과 동일 규칙을 재사용.
+   각국의 시그니처 색을 한눈에 보여주기 위해 랜딩에서는 약간 크게 렌더. */
+
+.landing-flag {
+  position: relative;
+  display: inline-block;
+  width: 72px;
+  height: 46px;
+  border: 1px solid rgba(245, 245, 242, 0.32);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 4px 14px rgba(0, 0, 0, 0.5);
+  flex: 0 0 auto;
+}
+.landing-flag::before,
+.landing-flag::after {
+  content: '';
+  position: absolute;
+}
+
+.landing-flag--gojoseon {
+  background: linear-gradient(90deg, #f4dfb7 0 62%, #4a1c2c 62% 100%);
+}
+.landing-flag--gojoseon::before {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #b3322e;
+  left: 14px;
+  top: 12px;
+}
+
+.landing-flag--goguryeo {
+  background: linear-gradient(135deg, #6f1418 0 50%, #1b263e 50% 100%);
+}
+.landing-flag--goguryeo::before {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #d9aa35;
+  left: 21px;
+  top: 8px;
+  box-shadow: 0 0 0 4px rgba(255, 238, 171, 0.22);
+}
+
+.landing-flag--baekje {
+  background: linear-gradient(180deg, #f7ead0 0 48%, #8d5fc3 48% 56%, #f7ead0 56% 100%);
+}
+.landing-flag--baekje::before {
+  width: 32px;
+  height: 24px;
+  border: 4px solid #8d5fc3;
+  border-left: 0;
+  border-bottom: 0;
+  border-radius: 50%;
+  left: 18px;
+  top: 11px;
+}
+
+.landing-flag--silla {
+  background: linear-gradient(135deg, #d8b737 0 50%, #234c38 50% 100%);
+}
+.landing-flag--silla::before {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff1bd;
+  left: 24px;
+  top: 11px;
+}
+
+.landing-flag--gaya {
+  background: repeating-linear-gradient(90deg, #16120f 0 14px, #9a6a3a 14px 22px);
+}
+.landing-flag--gaya::before {
+  inset: 10px 20px;
+  border: 3px solid #d0a45f;
+  transform: rotate(45deg);
+}
+
+.landing-flag--okjeo {
+  background: linear-gradient(180deg, #eef6ef 0 40%, #54a8c8 40% 100%);
+}
+.landing-flag--okjeo::before {
+  width: 70%;
+  height: 24px;
+  left: -8px;
+  top: 15px;
+  border-radius: 50%;
+  border-top: 7px solid #ffffff;
+}
+
+.landing-flag--dongye {
+  background: linear-gradient(135deg, #183b2c, #5ea05c);
+}
+.landing-flag--dongye::before {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f3ddb0;
+  left: 21px;
+  top: 11px;
+}
+.landing-flag--dongye::after {
+  width: 22px;
+  height: 24px;
+  border-radius: 50%;
+  background: #3d7748;
+  left: 29px;
+  top: 11px;
+}
+
+.landing-flag--samhan {
+  background: linear-gradient(90deg, #9d3030 0 33%, #e3bd54 33% 66%, #2f6f8f 66% 100%);
+}
+.landing-flag--samhan::before {
+  inset: 11px 27px;
+  border-radius: 50%;
+  background: #f8edd1;
+}
+
+.landing-flag--goryeo {
+  background: linear-gradient(135deg, #1f4f73 0 48%, #e8d199 48% 54%, #2d8b87 54% 100%);
+}
+.landing-flag--goryeo::before {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: #d6a93a;
+  left: 24px;
+  top: 11px;
+}
+
+.landing-flag--joseon {
+  background: #f5ead2;
+}
+.landing-flag--joseon::before {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #c94545 0 50%, #345c9a 50% 100%);
+  left: 24px;
+  top: 11px;
+}
+.landing-flag--joseon::after {
+  width: 8px;
+  height: 32px;
+  background: repeating-linear-gradient(180deg, #1e1a17 0 5px, transparent 5px 9px);
+  left: 8px;
+  top: 6px;
+  box-shadow: 46px 0 0 rgba(30, 26, 23, 0.95);
+}
+
+.landing-flag--balhae {
+  background: linear-gradient(180deg, #154a54 0 68%, #9e342d 68% 100%);
+}
+.landing-flag--balhae::before {
+  width: 24px;
+  height: 24px;
+  background: #d8b737;
+  clip-path: polygon(50% 0, 61% 34%, 98% 34%, 68% 55%, 80% 91%, 50% 68%, 20% 91%, 32% 55%, 2% 34%, 39% 34%);
+  left: 24px;
+  top: 10px;
+}
+
+@media (max-width: 560px) {
+  .landing-flag {
+    width: 56px;
+    height: 36px;
+  }
+  .landing-flag--gojoseon::before { width: 16px; height: 16px; left: 11px; top: 10px; }
+  .landing-flag--goguryeo::before { width: 20px; height: 20px; left: 16px; top: 8px; }
+  .landing-flag--silla::before { width: 18px; height: 18px; left: 19px; top: 9px; }
+  .landing-flag--joseon::before { width: 18px; height: 18px; left: 19px; top: 9px; }
+}
