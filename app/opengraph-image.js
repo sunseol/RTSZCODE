@@ -71,7 +71,7 @@ export default function OpengraphImage() {
         >
           한국 역사를,
           <br />
-          직접 살워보세요.
+          직접 싸워보세요.
         </div>
 
         <div

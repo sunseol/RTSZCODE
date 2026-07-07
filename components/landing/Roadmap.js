@@ -28,7 +28,7 @@ export default function Roadmap() {
           </p>
 
           <ul className="roadmap__list">
-            <li className="done">11개 한국 고대 국가 선택 시스템</li>
+            <li className="done">12개 한국 고대 국가 선택 시스템</li>
             <li className="done">3D 실시간 전투 — 자원·건설·유닛 생산</li>
             <li className="done">브라우저 무설치 플레이</li>
             <li>국가별 고유 유닛과 특성 (예정)</li>

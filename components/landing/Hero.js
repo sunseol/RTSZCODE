@@ -29,7 +29,7 @@ export default function Hero() {
         <h1 className="hero__title">
           한국 역사를,
           <br />
-          직접 <em>살워</em>보세요.
+          직접 <em>싸워</em>보세요.
         </h1>
 
         <p className="hero__sub">
@@ -49,7 +49,7 @@ export default function Hero() {
 
         <div className="hero__meta">
           <div>
-            <strong>11</strong>
+            <strong>12</strong>
             <span>한국 고대 국가</span>
           </div>
           <div>
