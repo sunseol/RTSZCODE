@@ -2,6 +2,25 @@
   #hint {
     display: none;
   }
+
+  #campaign-hud {
+    top: auto;
+    bottom: 14px;
+    width: min(340px, calc(100vw - 28px));
+  }
+
+  .campaign-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-map-frame,
+  .campaign-map-image {
+    min-height: 360px;
+  }
+
+  .campaign-detail {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 520px) {
@@ -40,6 +59,10 @@
     padding: 14px 16px 22px;
   }
 
+  .overlay {
+    background: radial-gradient(circle at center, rgba(20, 14, 8, 0.98), #050301);
+  }
+
   .overlay-content h1 {
     font-size: 30px;
     margin-bottom: 8px;
@@ -67,6 +90,18 @@
     gap: 8px;
   }
 
+  .start-actions,
+  .campaign-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #start-btn,
+  #campaign-start-btn,
+  .mode-btn {
+    width: 100%;
+  }
+
   .nation-options {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -88,7 +123,110 @@
     font-size: 44px;
   }
 
-  #start-btn {
+  .campaign-map-frame,
+  .campaign-map-image {
+    min-height: 300px;
+  }
+
+  .campaign-marker {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    border-color: transparent;
+    background: transparent;
+    padding: 0;
+  }
+
+  .campaign-marker:hover,
+  .campaign-marker:focus-visible,
+  .campaign-marker.selected {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .campaign-marker__label {
+    display: none;
+  }
+
+  .campaign-marker.selected .campaign-marker__pin,
+  .campaign-marker:focus-visible .campaign-marker__pin {
+    box-shadow: 0 0 0 3px rgba(255, 248, 224, 0.28), 0 0 16px var(--scenario-accent, #c9962f);
+  }
+
+  .campaign-marker[data-scenario-id="tianmenling"] {
+    left: 70%;
+    top: 14%;
+  }
+
+  .campaign-marker[data-scenario-id="wanggeom-fortress"] {
+    left: 42%;
+    top: 24%;
+  }
+
+  .campaign-marker[data-scenario-id="okjeo-coast"] {
+    left: 70%;
+    top: 28%;
+  }
+
+  .campaign-marker[data-scenario-id="salsu-river"] {
+    left: 54%;
+    top: 34%;
+  }
+
+  .campaign-marker[data-scenario-id="gwiju"] {
+    left: 40%;
+    top: 39%;
+  }
+
+  .campaign-marker[data-scenario-id="maeso-fortress"] {
+    left: 50%;
+    top: 50%;
+  }
+
+  .campaign-marker[data-scenario-id="dongye-forest"] {
+    left: 67%;
+    top: 45%;
+  }
+
+  .campaign-marker[data-scenario-id="hwangsanbeol"] {
+    left: 42%;
+    top: 68%;
+  }
+
+  .campaign-marker[data-scenario-id="daegaya-last-stand"] {
+    left: 64%;
+    top: 73%;
+  }
+
+  .campaign-marker[data-scenario-id="myeongnyang"] {
+    left: 35%;
+    top: 84%;
+  }
+
+  .campaign-marker[data-scenario-id="samhan-iron-route"] {
+    left: 58%;
+    top: 87%;
+  }
+
+  .campaign-marker[data-scenario-id="hangpaduri"] {
+    left: 36%;
+    top: 96%;
+  }
+
+  .campaign-detail {
+    padding: 14px;
+  }
+
+  .campaign-detail h2 {
+    font-size: 20px;
+  }
+
+  #campaign-hud {
+    display: none;
+  }
+
+  #start-btn,
+  #campaign-start-btn {
     padding: 10px 30px;
     font-size: 16px;
   }

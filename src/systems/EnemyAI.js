@@ -4,8 +4,10 @@ import { dist2D } from '../utils/helpers.js';
 export class EnemyAI {
   constructor(game) {
     this.game = game;
-    this.waveTimer = 35; // 첫 웨이브까지 35초
-    this.waveInterval = 35;
+    const wave = game.campaignScenario?.wave || {};
+    this.waveTimer = wave.firstDelay ?? 35; // 첫 웨이브까지 35초
+    this.waveInterval = wave.interval ?? 35;
+    this.waveScale = wave.scale ?? 1;
     this.waveNumber = 0;
   }
 
@@ -33,7 +35,7 @@ export class EnemyAI {
 
   _spawnWave() {
     this.waveNumber++;
-    const count = 3 + Math.floor(this.waveNumber * 1.5);
+    const count = Math.max(1, Math.round((3 + Math.floor(this.waveNumber * 1.5)) * this.waveScale));
     const enemyBarracks = this.game.buildings.filter(
       (b) => b.team === 'enemy' && b.constructor.name === 'Barracks'
     );

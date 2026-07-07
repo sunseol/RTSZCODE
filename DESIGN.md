@@ -19,10 +19,13 @@ The interface uses a compact medieval command-table style: dark wood panels, war
 - Minimap: fixed-format bottom-left panel with title, stable canvas size, and no layout shift.
 - Start overlay: centered scroll-safe command sheet with title, short instructions, settings, and one primary action.
 - Nation option: button with a CSS-rendered symbolic flag, Korean label, selected state via gold border and subtle lift.
+- Campaign map: scroll-safe command sheet that pairs a framed peninsula image with absolute battle markers, a scenario detail ledger, and one primary `해당 시나리오 경험하기` action.
+- Campaign HUD: compact top-center objective panel that names the active historical battle without blocking battlefield controls.
 - End result card: centered status panel that states `승리` or `패배` as the highest-priority text before explanatory copy.
 
 ## Responsive Rules
 - Desktop keeps HUD at the four corners and start settings in a dense grid.
+- Campaign map uses a two-column map/detail layout on desktop and stacks map above detail on tablet and mobile.
 - Tablet and mobile allow the start overlay to scroll inside the viewport.
 - Mobile hides the hint, compacts minimap dimensions, and prevents top HUD overlap.
 

@@ -25,6 +25,7 @@ export class Game {
     this.running = false;
     this.gameOver = false;
     this.playerNation = options.playerNation || DEFAULT_NATION;
+    this.campaignScenario = options.campaignScenario || null;
 
     // 유닛 클래스 레퍼런스 (Building 등에서 참조용)
     this.unitClasses = { Knight, Archer, Cavalry, Healer, Villager };
@@ -49,7 +50,7 @@ export class Game {
     this.lighting = createLighting(this.scene);
 
     // ===== 시스템 =====
-    this.resources = new ResourceSystem();
+    this.resources = new ResourceSystem(this.campaignScenario?.startingResources);
     this.combat = new CombatSystem(this);
     this.enemyAI = new EnemyAI(this);
     this.build = new BuildSystem(this);
@@ -122,9 +123,26 @@ export class Game {
       const mine = this.findNearestMine(v.x, v.z);
       if (mine) v.commandGather(mine);
     }
+    this._setupCampaignForces();
 
     // 카메라를 플레이어 성으로
     this.rtsCamera.setTarget(this.playerStart.x, this.playerStart.z);
+  }
+
+  _setupCampaignForces() {
+    const entries = this.campaignScenario?.startingUnits || [];
+    let unitIndex = 0;
+    for (const entry of entries) {
+      const UnitClass = this.unitClasses[entry.type];
+      if (!UnitClass) continue;
+      for (let i = 0; i < entry.count; i++) {
+        const row = unitIndex % 3;
+        const column = Math.floor(unitIndex / 3);
+        const unit = new UnitClass(this, this.playerStart.x + 12 + column * 3, this.playerStart.z - 8 + row * 6, 'player');
+        this.addUnit(unit);
+        unitIndex++;
+      }
+    }
   }
 
   addUnit(unit) {
@@ -276,12 +294,13 @@ export class Game {
     const overlay = document.getElementById('overlay');
     const result = won ? '승리' : '패배';
     const nationName = this.playerNation?.name || '왕국';
+    const resultLabel = this.campaignScenario ? this.campaignScenario.title : '전투 결과';
     overlay.style.display = 'flex';
     overlay.classList.remove('fade');
     overlay.innerHTML = `
       <div class="overlay-content ${won ? 'win' : 'lose'}">
         <div class="end-result-card" role="status" aria-live="polite">
-          <span class="end-result-label">전투 결과</span>
+          <span class="end-result-label">${resultLabel}</span>
           <strong class="end-result-state">${result}</strong>
         </div>
         <h1>${won ? '왕국을 지켜냈습니다' : '성이 함락되었습니다'}</h1>

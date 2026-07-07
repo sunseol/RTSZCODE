@@ -203,6 +203,39 @@
   border-radius: 4px;
 }
 
+#campaign-hud {
+  top: 14px;
+  left: 50%;
+  width: min(360px, calc(100vw - 520px));
+  transform: translateX(-50%);
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+#campaign-hud-label {
+  display: block;
+  color: #c9962f;
+  font-size: 11px;
+  font-weight: 900;
+  margin-bottom: 3px;
+}
+
+#campaign-hud-title {
+  display: block;
+  color: #ffd54a;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+#campaign-hud-objective {
+  display: block;
+  color: #d9c8a6;
+  font-size: 11px;
+  line-height: 1.35;
+  margin-top: 3px;
+}
+
 #drag-box {
   position: absolute;
   border: 1.5px solid rgba(120, 220, 120, 0.9);

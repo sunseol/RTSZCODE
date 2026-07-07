@@ -12,6 +12,9 @@ export class HUD {
     this.waveTimerEl = document.getElementById('wave-timer');
     this.playerCastleBar = document.getElementById('player-castle-bar');
     this.enemyCastleBar = document.getElementById('enemy-castle-bar');
+    this.campaignHudEl = document.getElementById('campaign-hud');
+    this.campaignTitleEl = document.getElementById('campaign-hud-title');
+    this.campaignObjectiveEl = document.getElementById('campaign-hud-objective');
     this.selInfo = document.getElementById('selection-info');
     this.selSummary = document.getElementById('selection-summary');
     this.minimapCanvas = document.getElementById('minimap-canvas');
@@ -20,12 +23,20 @@ export class HUD {
 
     this.markers = [];
     this.updateNationBadge();
+    this.updateCampaignBadge();
   }
 
   updateNationBadge() {
     if (!this.nationBadgeEl || !this.game.playerNation) return;
     const nation = this.game.playerNation;
     this.nationBadgeEl.innerHTML = `${nationFlagHtml(nation, 'nation-flag--tiny')}<span>${nation.name}</span>`;
+  }
+
+  updateCampaignBadge() {
+    if (!this.campaignHudEl || !this.game.campaignScenario) return;
+    this.campaignHudEl.classList.remove('hidden');
+    this.campaignTitleEl.textContent = this.game.campaignScenario.title;
+    this.campaignObjectiveEl.textContent = this.game.campaignScenario.objective;
   }
 
   update() {

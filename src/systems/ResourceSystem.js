@@ -1,8 +1,11 @@
 // 자원 시스템 — 팀별 gold/food 보유량 관리
 export class ResourceSystem {
-  constructor() {
+  constructor(initialPlayer = {}) {
     this.stores = {
-      player: { gold: 200, food: 100 },
+      player: {
+        gold: initialPlayer.gold ?? 200,
+        food: initialPlayer.food ?? 100,
+      },
       enemy: { gold: 9999, food: 9999 }, // 적 AI는 무제한 (간소화)
     };
     this.foodCap = { player: 50, enemy: 9999 };
