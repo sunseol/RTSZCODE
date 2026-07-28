@@ -12,6 +12,10 @@ npm-debug.log*
 # 캐시
 .cache/
 
+# 로컬 환경변수 및 비밀값
+.env*
+!.env.example
+
 # OS 파일
 .DS_Store
 Thumbs.db

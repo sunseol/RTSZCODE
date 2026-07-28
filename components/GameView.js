@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export default function GameView() {
+export default function GameView({ player }) {
   const [isBooted, setIsBooted] = useState(false);
 
   useEffect(() => {
@@ -108,6 +108,31 @@ export default function GameView() {
       <div id="overlay" className="overlay">
         <div className="overlay-content">
           <div id="nation-start-panel">
+            <div className="game-player">
+              {player.avatar ? (
+                <img
+                  className="game-player__avatar"
+                  src={player.avatar}
+                  alt=""
+                  width="40"
+                  height="40"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <span className="game-player__placeholder" aria-hidden="true">
+                  {player.name.slice(0, 1)}
+                </span>
+              )}
+              <div className="game-player__identity">
+                <span>Zalo 로그인</span>
+                <strong>{player.name}</strong>
+              </div>
+              <form action="/api/auth/logout" method="post">
+                <button className="game-player__logout" type="submit">
+                  로그아웃
+                </button>
+              </form>
+            </div>
             <h1>중세 왕국 전쟁</h1>
             <p>
               적의 성을 파괴하라. 정기적인 웨이브를 막아내며 병력을 키우세요.

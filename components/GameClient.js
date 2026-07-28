@@ -12,6 +12,6 @@ const GameView = dynamic(() => import('./GameView'), {
   ),
 });
 
-export default function GameClient() {
-  return <GameView />;
+export default function GameClient({ player }) {
+  return <GameView player={player} />;
 }

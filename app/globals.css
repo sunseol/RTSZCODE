@@ -27,6 +27,9 @@
   --dancheong-black: #1a1a1a;  /* 흑 */
   --dancheong-white: #f5f5f2;  /* 백 */
 
+  --zalo-blue: #0068ff;
+  --zalo-blue-pressed: #0054cc;
+
   /* 폰트 (구글 웹폰트) */
   --font-serif: 'Noto Serif KR', serif;
   --font-sans: 'Noto Sans KR', system-ui, sans-serif;

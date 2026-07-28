@@ -1,0 +1,222 @@
+.zalo-gate {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 32px 20px;
+  background: var(--ink);
+}
+
+.zalo-gate__atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 16%, color-mix(in srgb, var(--dancheong-red) 20%, transparent), transparent 44%),
+    radial-gradient(circle at 84% 80%, color-mix(in srgb, var(--dancheong-blue) 24%, transparent), transparent 48%);
+  pointer-events: none;
+}
+
+.zalo-gate__card {
+  position: relative;
+  width: min(100%, 480px);
+  padding: clamp(32px, 6vw, 48px);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ink-2) 92%, transparent);
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--ink) 72%, transparent);
+}
+
+.zalo-gate__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 48px;
+  color: var(--paper);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.zalo-gate__brand span {
+  color: var(--dancheong-gold);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+}
+
+.zalo-gate__eyebrow {
+  margin-bottom: 12px;
+  color: var(--dancheong-gold);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+
+.zalo-gate h1 {
+  margin-bottom: 20px;
+  color: var(--paper);
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 8vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+
+.zalo-gate__copy {
+  margin-bottom: 28px;
+  color: var(--paper-muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.zalo-gate__alert {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--dancheong-red);
+  background: color-mix(in srgb, var(--dancheong-red) 12%, transparent);
+  color: var(--paper);
+  font-size: 14px;
+  word-break: keep-all;
+}
+
+.zalo-login-button {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid var(--zalo-blue);
+  border-radius: 8px;
+  background: var(--zalo-blue);
+  color: var(--paper);
+  font-size: 16px;
+  font-weight: 700;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.zalo-login-button:hover {
+  transform: translateY(-2px);
+  background: var(--zalo-blue-pressed);
+}
+
+.zalo-login-button:focus-visible,
+.zalo-gate__back:focus-visible,
+.game-player__logout:focus-visible {
+  outline: 2px solid var(--dancheong-gold);
+  outline-offset: 4px;
+}
+
+.zalo-login-button__mark {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--zalo-blue);
+  font-weight: 900;
+}
+
+.zalo-login-button--disabled {
+  border-color: var(--line-2);
+  background: var(--ink-3);
+  color: var(--paper-dim);
+  cursor: not-allowed;
+}
+
+.zalo-login-button--disabled .zalo-login-button__mark {
+  color: var(--paper-dim);
+}
+
+.zalo-gate__privacy {
+  margin-top: 16px;
+  color: var(--paper-dim);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.zalo-gate__back {
+  display: inline-block;
+  margin-top: 32px;
+  color: var(--paper-muted);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.game-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ink-3) 88%, transparent);
+}
+
+.game-player__avatar,
+.game-player__placeholder {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+}
+
+.game-player__avatar {
+  object-fit: cover;
+}
+
+.game-player__placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--zalo-blue);
+  color: var(--paper);
+  font-weight: 700;
+}
+
+.game-player__identity {
+  min-width: 0;
+  flex: 1;
+}
+
+.game-player__identity span,
+.game-player__identity strong {
+  display: block;
+}
+
+.game-player__identity span {
+  color: var(--paper-dim);
+  font-size: 12px;
+}
+
+.game-player__identity strong {
+  overflow: hidden;
+  color: var(--paper);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-player__logout {
+  padding: 8px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--paper-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .zalo-gate__card {
+    padding: 28px 24px;
+  }
+
+  .zalo-gate__brand {
+    margin-bottom: 32px;
+  }
+}
