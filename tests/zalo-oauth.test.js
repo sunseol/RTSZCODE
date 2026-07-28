@@ -96,7 +96,8 @@ test('reads only the Zalo profile fields needed by the game session', async () =
   // Then
   const url = new URL(requests[0]);
   assert.equal(url.origin + url.pathname, 'https://graph.zalo.me/v2.0/me');
-  assert.equal(url.searchParams.get('access_token'), 'zalo-access-token');
+  assert.equal(url.searchParams.get('accesstoken'), 'zalo-access-token');
+  assert.equal(url.searchParams.has('access_token'), false);
   assert.equal(url.searchParams.get('fields'), 'id,name,picture');
   assert.deepEqual(profile, {
     id: 'zalo-user-42',
