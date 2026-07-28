@@ -5,6 +5,7 @@ import ZaloLoginGate from '@/components/ZaloLoginGate';
 import '@/components/zalo-login.css';
 import { hasAuthConfiguration } from '@/lib/auth/config';
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/auth/session';
+import { parseZaloAuthError } from '@/lib/auth/zalo';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,8 +29,7 @@ export default function PlayPage({ searchParams }) {
   if (!player) {
     const rawError =
       typeof searchParams?.auth_error === 'string' ? searchParams.auth_error : null;
-    const [error, rawErrorCode] = rawError?.split(':', 2) ?? [null, null];
-    const errorCode = rawErrorCode && /^\d+$/.test(rawErrorCode) ? rawErrorCode : null;
+    const { error, errorCode } = parseZaloAuthError(rawError);
     return (
       <ZaloLoginGate
         configured={hasAuthConfiguration()}

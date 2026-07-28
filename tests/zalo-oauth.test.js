@@ -6,6 +6,7 @@ import {
   createOAuthAttempt,
   exchangeAuthorizationCode,
   fetchZaloProfile,
+  parseZaloAuthError,
   ZaloOAuthError,
 } from '../lib/auth/zalo.js';
 
@@ -120,4 +121,18 @@ test('preserves the safe Zalo error code when profile access is rejected', async
     () => fetchZaloProfile('rejected-token', fetchImpl),
     (error) => error instanceof ZaloOAuthError && error.code === 452,
   );
+});
+
+test('shows signed Zalo error codes returned by the OAuth callback', () => {
+  // Given
+  const callbackError = 'profile:-201';
+
+  // When
+  const parsed = parseZaloAuthError(callbackError);
+
+  // Then
+  assert.deepEqual(parsed, {
+    error: 'profile',
+    errorCode: '-201',
+  });
 });
