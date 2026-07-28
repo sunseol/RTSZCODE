@@ -83,6 +83,7 @@ export async function GET(request) {
     return finish(request, null, sessionToken);
   } catch (error) {
     const stage = error instanceof ZaloOAuthError ? error.stage : 'callback';
-    return finish(request, stage);
+    const errorCode = error instanceof ZaloOAuthError ? error.code : null;
+    return finish(request, errorCode === null ? stage : `${stage}:${errorCode}`);
   }
 }

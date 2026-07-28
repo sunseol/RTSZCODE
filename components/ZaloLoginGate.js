@@ -7,7 +7,7 @@ const errorMessages = {
   configuration: 'Zalo 로그인 설정이 아직 완료되지 않았습니다.',
 };
 
-export default function ZaloLoginGate({ configured, error }) {
+export default function ZaloLoginGate({ configured, error, errorCode }) {
   const errorMessage = errorMessages[error];
 
   return (
@@ -27,6 +27,7 @@ export default function ZaloLoginGate({ configured, error }) {
         {errorMessage ? (
           <p className="zalo-gate__alert" role="alert">
             {errorMessage}
+            {errorCode ? ` (Zalo 오류 코드 ${errorCode})` : null}
           </p>
         ) : null}
 

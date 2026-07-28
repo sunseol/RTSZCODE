@@ -26,9 +26,17 @@ export default function PlayPage({ searchParams }) {
   });
 
   if (!player) {
-    const error =
+    const rawError =
       typeof searchParams?.auth_error === 'string' ? searchParams.auth_error : null;
-    return <ZaloLoginGate configured={hasAuthConfiguration()} error={error} />;
+    const [error, rawErrorCode] = rawError?.split(':', 2) ?? [null, null];
+    const errorCode = rawErrorCode && /^\d+$/.test(rawErrorCode) ? rawErrorCode : null;
+    return (
+      <ZaloLoginGate
+        configured={hasAuthConfiguration()}
+        error={error}
+        errorCode={errorCode}
+      />
+    );
   }
 
   return <GameClient player={player} />;

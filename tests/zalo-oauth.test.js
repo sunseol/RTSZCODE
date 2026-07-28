@@ -6,6 +6,7 @@ import {
   createOAuthAttempt,
   exchangeAuthorizationCode,
   fetchZaloProfile,
+  ZaloOAuthError,
 } from '../lib/auth/zalo.js';
 
 test('creates a distinct PKCE attempt for every login request', () => {
@@ -96,12 +97,27 @@ test('reads only the Zalo profile fields needed by the game session', async () =
   // Then
   const url = new URL(requests[0]);
   assert.equal(url.origin + url.pathname, 'https://graph.zalo.me/v2.0/me');
-  assert.equal(url.searchParams.get('accesstoken'), 'zalo-access-token');
-  assert.equal(url.searchParams.has('access_token'), false);
+  assert.equal(url.searchParams.get('access_token'), 'zalo-access-token');
+  assert.equal(url.searchParams.has('accesstoken'), false);
   assert.equal(url.searchParams.get('fields'), 'id,name,picture');
   assert.deepEqual(profile, {
     id: 'zalo-user-42',
     name: '이순신',
     avatar: 'https://example.com/avatar.jpg',
   });
+});
+
+test('preserves the safe Zalo error code when profile access is rejected', async () => {
+  // Given
+  const fetchImpl = async () =>
+    Response.json({
+      error: 452,
+      message: 'Session key invalid',
+    });
+
+  // When / Then
+  await assert.rejects(
+    () => fetchZaloProfile('rejected-token', fetchImpl),
+    (error) => error instanceof ZaloOAuthError && error.code === 452,
+  );
 });
