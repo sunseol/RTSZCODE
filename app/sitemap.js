@@ -10,11 +10,7 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 1,
     },
-    {
-      url: `${siteUrl}/play`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
+    // /play 는 robots.txt 에서 disallow + noindex 이므로 sitemap 에서 제외
+    // (색인 대상만 sitemap 에 포함하는 것이 권장됨)
   ];
 }
