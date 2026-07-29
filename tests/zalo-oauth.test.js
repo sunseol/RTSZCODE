@@ -108,6 +108,45 @@ test('reads only the Zalo profile fields needed by the game session', async () =
   });
 });
 
+test('routes the Zalo profile request through the configured proxy', async () => {
+  // Given
+  const requests = [];
+  const fetchImpl = async (url, init) => {
+    requests.push({ url, init });
+    return Response.json({
+      id: 'zalo-user-42',
+      name: '이순신',
+      picture: { data: { url: 'https://example.com/avatar.jpg' } },
+    });
+  };
+
+  // When
+  await fetchZaloProfile(
+    'zalo-access-token',
+    fetchImpl,
+    'http://proxy-user:proxy-password@proxy.example:8080',
+  );
+
+  // Then
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].init.dispatcher?.constructor.name, 'ProxyAgent');
+});
+
+test('bounds the Zalo profile request duration when the proxy stalls', async () => {
+  // Given
+  let requestSignal;
+  const fetchImpl = async (_url, init) => {
+    requestSignal = init.signal;
+    return Response.json({ id: 'zalo-user-42', name: '이순신' });
+  };
+
+  // When
+  await fetchZaloProfile('zalo-access-token', fetchImpl);
+
+  // Then
+  assert.equal(requestSignal instanceof AbortSignal, true);
+});
+
 test('preserves the safe Zalo error code when profile access is rejected', async () => {
   // Given
   const fetchImpl = async () =>
