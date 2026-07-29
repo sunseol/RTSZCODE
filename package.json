@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --test"
+    "test": "node --test",
+    "relay:zalo": "node --env-file-if-exists=.env.relay scripts/zalo-relay.js",
+    "tunnel:zalo": "tools\\bin\\cloudflared.exe tunnel --url http://127.0.0.1:8787"
   },
   "dependencies": {
     "next": "^14.2.5",

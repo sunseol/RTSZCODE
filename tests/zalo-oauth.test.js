@@ -124,12 +124,41 @@ test('routes the Zalo profile request through the configured proxy', async () =>
   await fetchZaloProfile(
     'zalo-access-token',
     fetchImpl,
-    'http://proxy-user:proxy-password@proxy.example:8080',
+    { proxyUrl: 'http://proxy-user:proxy-password@proxy.example:8080' },
   );
 
   // Then
   assert.equal(requests.length, 1);
   assert.equal(requests[0].init.dispatcher?.constructor.name, 'ProxyAgent');
+});
+
+test('routes the Zalo profile request through the authenticated relay', async () => {
+  // Given
+  const requests = [];
+  const fetchImpl = async (url, init) => {
+    requests.push({ url, init });
+    return Response.json({
+      id: 'zalo-user-42',
+      name: '이순신',
+      picture: { data: { url: 'https://example.com/avatar.jpg' } },
+    });
+  };
+
+  // When
+  await fetchZaloProfile('zalo-access-token', fetchImpl, {
+    relayUrl: 'https://relay.example/zalo/profile',
+    relaySecret: 'relay-secret',
+  });
+
+  // Then
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].url, 'https://relay.example/zalo/profile');
+  assert.equal(requests[0].init.method, 'POST');
+  assert.equal(requests[0].init.headers.Authorization, 'Bearer relay-secret');
+  assert.equal(requests[0].init.headers['Content-Type'], 'application/json');
+  assert.deepEqual(JSON.parse(requests[0].init.body), {
+    accessToken: 'zalo-access-token',
+  });
 });
 
 test('bounds the Zalo profile request duration when the proxy stalls', async () => {

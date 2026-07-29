@@ -11,10 +11,12 @@ npm-debug.log*
 
 # 캐시
 .cache/
+tools/bin/
 
 # 로컬 환경변수 및 비밀값
 .env*
 !.env.example
+!.env.relay.example
 
 # OS 파일
 .DS_Store

@@ -71,6 +71,29 @@ npm start
 - 절차적 메시 생성 (나무, 바위, 건물, 유닛 모두 코드로 생성)
 - importmap 방식 모듈 로딩
 
+## Zalo 무료 로컬 릴레이 테스트
+
+Zalo 프로필 API가 해외 서버에서 `-501`을 반환하면 다음 경로로 테스트할 수 있습니다.
+
+```text
+Vercel → Cloudflare Quick Tunnel → 이 PC → 베트남 VPN → Zalo
+```
+
+1. `.env.relay.example`을 `.env.relay`로 복사하고 32자 이상의 무작위
+   `ZALO_RELAY_SECRET`을 입력합니다.
+2. PC를 베트남 VPN에 연결한 뒤 `https://ipinfo.io/country`의 응답이
+   `VN`인지 확인합니다.
+3. 첫 번째 터미널에서 `npm run relay:zalo`를 실행합니다.
+4. 두 번째 터미널에서 `npm run tunnel:zalo`를 실행합니다.
+5. 출력된 `https://...trycloudflare.com` 주소 뒤에 `/zalo/profile`을 붙여
+   Vercel의 `ZALO_RELAY_URL`에 넣습니다.
+6. `.env.relay`과 동일한 값을 Vercel의 `ZALO_RELAY_SECRET`에 넣고 새로
+   배포합니다. `ZALO_PROXY_URL`은 비워도 됩니다.
+
+Quick Tunnel 주소는 터널을 다시 실행하면 바뀔 수 있으며 PC, 베트남 VPN,
+릴레이 및 터널 터미널이 모두 실행 중이어야 합니다. 릴레이는
+`POST /zalo/profile`만 공유 비밀값으로 허용하고 액세스 토큰을 기록하지 않습니다.
+
 ## 📁 프로젝트 구조
 ```
 ├── index.html              # 진입점 + UI 오버레이
